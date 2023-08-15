@@ -1,4 +1,4 @@
-import 'package:dw_barbershop/features/auth/login/login_page.dart';
+import 'package:dw_barbershop/src/features/auth/login/login_page.dart';
 import 'package:flutter/material.dart';
 
 class SplashPage extends StatefulWidget {
