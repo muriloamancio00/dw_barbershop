@@ -11,6 +11,7 @@ class BarbershopApp extends StatelessWidget {
        return AsyncStateBuilder(builder: (asyncNavigatorObserver) {
          return MaterialApp(
           title: 'DW Barbershop',
+          // o riverpod realiza algumas açoes antes do build da tela
           navigatorObservers: [asyncNavigatorObserver],
           routes: {
             '/': (_) => const SplashPage() 
