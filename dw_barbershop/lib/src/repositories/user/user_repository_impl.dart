@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:dw_barbershop/src/core/exceptions/auth_exception.dart';
 import 'package:dw_barbershop/src/core/fp/either.dart';
@@ -15,15 +18,23 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<Either<AuthException, String>> login(
     String email, String password) async {
-    final Response(:data) = await restClient.unAuth.post('/auth',data: {
+    try {
+      final Response(:data) = await restClient.unAuth.post('/auth',data: {
       'email': email,
       'password': password,
     });
-
-    return Success(data['access_token']);
-
+  
+  return Success(data['access_token']);
+  } on DioException catch (e, s) {
+    if(e.response != null){
+      final Response(:statusCode) = e.response!;
+      if(statusCode == HttpStatus.forbidden) {
+        log('Login ou Senha inválidos', error: e, stackTrace: s);
+        return Failure(AuthUnauthorizedException());
+      }
+    }
+    log('Erro ao Realizar login', error: e, stackTrace: s);
+    return Failure(AuthError(message: 'Erro ao Realizar Login'));
+    }
   }
-
-
-
 }

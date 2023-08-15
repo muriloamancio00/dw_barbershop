@@ -10,6 +10,6 @@ class AuthError extends AuthException {
   AuthError({required super.message});
 }
 
-class AuthUnauthorizedError extends AuthException {
-  AuthUnauthorizedError({required super.message});
+class AuthUnauthorizedException extends AuthException {
+  AuthUnauthorizedException() : super(message: '');
 }
