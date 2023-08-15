@@ -9,15 +9,20 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
 
-  var _scale =10;
+  var _scale =10.0;
   // quando a tela é construida ela vem sem cor, e quando constroi ela recebe o valor se alterando
   var _animationOpacityLogo =0.0;
+
+  //metodos auxiliares para efeito de entrada da logo
+  double get _logoAnimationWidth => 100 * _scale;
+  double get _logoAnimationHeight => 120 * _scale;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) { 
       setState(() {
         _animationOpacityLogo = 1.0;
+        _scale = 1;
       });
     });
     super.initState();
@@ -42,7 +47,13 @@ class _SplashPageState extends State<SplashPage> {
               duration: const Duration(seconds: 3),
               curve: Curves.easeIn,
               opacity: _animationOpacityLogo,
-              child: Image.asset('assets/images/imgLogo.png')
+              child: AnimatedContainer(
+                duration: const Duration(seconds: 3),
+                width: _logoAnimationWidth,
+                height: _logoAnimationHeight,
+                curve: Curves.linearToEaseOut,
+                child: Image.asset('assets/images/imgLogo.png', fit:BoxFit.cover)
+              )
             ),
           ),
       ),
