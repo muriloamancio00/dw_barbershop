@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:dw_barbershop/src/core/restClient/interceptors/auth_interceptors.dart';
 
 final class RestClient extends DioForNative{
   RestClient() :super(BaseOptions(
@@ -11,6 +12,7 @@ final class RestClient extends DioForNative{
           requestBody: true,
           responseBody: true,
         ),
+        AuthInterceptors(),
       ]);
     }
 
