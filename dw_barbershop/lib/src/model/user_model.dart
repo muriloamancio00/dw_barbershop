@@ -45,7 +45,7 @@ class UserModelADM extends UserModel {
         email: email,
         avatar: json['avatar'],
         workDays: json['work_days']?.cast<String>(),
-        workHours: json['work_hours']?.cast<String>(),
+        workHours: json['work_hours']?.cast<int>(),
         ),
       // isso é o coringa, se nao for ele resolve o problema
       _=> throw ArgumentError('Invalid Json'),
