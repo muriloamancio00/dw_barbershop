@@ -1,11 +1,16 @@
 import 'package:dw_barbershop/src/core/fp/either.dart';
 import 'package:dw_barbershop/src/core/restClient/rest_client.dart';
+import 'package:dw_barbershop/src/model/barbershop_model.dart';
 import 'package:dw_barbershop/src/model/user_model.dart';
+import 'package:dw_barbershop/src/repositories/barbershop_repository.dart';
 import 'package:dw_barbershop/src/repositories/user/user_repository.dart';
 import 'package:dw_barbershop/src/repositories/user/user_repository_impl.dart';
 import 'package:dw_barbershop/src/services/users_login/user_login_service.dart';
 import 'package:dw_barbershop/src/services/users_login/user_login_service_impl.dart';
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../repositories/barbershop_repository_impl.dart';
 
 // o riverpod precisa manter essa sessao como um singleton dentro do sistema
 // RestClientRef é gerado pelo sistema
@@ -36,5 +41,24 @@ Future<UserModel> getMe(GetMeRef ref) async {
   };
   //isso inicia, guarda a informação e destroi, com o uso do keepAlive,
   // esses itens ppermanecem em cache, quando for pedido ele retorna esses dados de user
+}
+
+@Riverpod(keepAlive: true)
+BarbershopRepository barbershopRepository(BarbershopRepositoryRef ref) =>
+    BarbershopRepositoryImpl(restClient: ref.watch(restClientProvider));
+
+@Riverpod(keepAlive: true)
+Future<BarbershopModel> getMyBarbershop(GetMyBarbershopRef ref) async{
+  final barbershopRepository = ref.watch(barbershopRepositoryProvider);
+
+  //primeira vez a ser executado ele me retorna o getme
+  //segunda vez ele me retorna direto o objeto montado
+  final userModel = await ref.watch(getMeProvider.future);
+  final result = await barbershopRepository.getMyBarbershop(userModel);
+
+  return switch(result)  {
+    Success(value: final barbershop) => barbershop,
+    Failure (:final exception) => throw exception,
+  };
 
 }
