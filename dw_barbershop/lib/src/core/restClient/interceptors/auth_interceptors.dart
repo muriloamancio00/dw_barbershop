@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:dw_barbershop/src/core/constants/local_storage_keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-//Interceptor, coisas que acontecem no ciclo de vida de uma requisiçsão HTTP
+//Interceptor, coisas que acontecem no ciclo de vida de uma requisição HTTP
 //bate ou não backend, volta com success, ou erro, 4 passos
 class AuthInterceptors extends Interceptor{
 

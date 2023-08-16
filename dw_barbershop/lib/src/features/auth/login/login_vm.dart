@@ -4,6 +4,7 @@ import 'package:asyncstate/asyncstate.dart';
 import 'package:dw_barbershop/src/core/exceptions/service_exception.dart';
 import 'package:dw_barbershop/src/core/providers/aplication_providers.dart';
 import 'package:dw_barbershop/src/features/auth/login/login_state.dart';
+import 'package:dw_barbershop/src/model/user_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/fp/either.dart';
@@ -27,8 +28,18 @@ class LoginVm extends _$LoginVm {
     // 2 passo, analisar oque foi retornado
     switch(result){
       case Success():
+      //!invalidar cache antigo, para evitar login de user errado
+      ref.invalidate(getMeProvider);
+      ref.invalidate(getMyBarbershopProvider);
       // buscar dados do usuario logado
       // fazer analise para qual o tipo do login
+      final UserModel = await ref.read(getMeProvider.future);
+      switch(UserModel) {
+        case UserModelADM():
+          state = state.copyWith(status: LoginStateStatus.admLogin);
+        case UserModelEmployee():
+        state = state.copyWith(status: LoginStateStatus.employeeLogin);
+      }
         break;
         // Destruction para economizar variavel, estraindo so a mensagem da exeption
       case Failure(exception: ServiceException(: final message)):
