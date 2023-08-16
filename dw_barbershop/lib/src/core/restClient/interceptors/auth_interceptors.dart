@@ -33,11 +33,16 @@ class AuthInterceptors extends Interceptor{
   void onError(DioException err, ErrorInterceptorHandler handler) {
     final DioException(requestOptions: RequestOptions(:extra), :response) = err;
 
-    if(extra case {'DIO_AUTH_KEY': true}) {
+//se for requisiçãso autentificada
+    if(extra case {'DIO_AUTH_KEY': true}) { 
+//se for a requisiçãso receber status 403('forbiden')
       if(response != null && response.statusCode == HttpStatus.forbidden) {
+//vamos redirecionar a tela para o login
         Navigator.of(BarbershopNavGlobalKey.instance.navKey.currentContext!)
           .pushNamedAndRemoveUntil('/auth/login', (route) => false);
       }
     }
+//see não vamos rejeitar nossa requisição ('nao autentificada')
+    handler.reject(err);
   }  
 }
