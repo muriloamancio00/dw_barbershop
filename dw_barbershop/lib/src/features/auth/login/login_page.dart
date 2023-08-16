@@ -13,7 +13,7 @@ class LoginPage extends StatelessWidget {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                  'assets/images/background_image_chair.jpg',
+                  ImageConstants.backgroundChair,
                 ),
                 opacity: 0.2,
                 fit: BoxFit.cover
@@ -33,7 +33,7 @@ class LoginPage extends StatelessWidget {
                           // tudo que é colocado na tela inicia no centro
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset('assets/images/imgLogo.png'),
+                            Image.asset(ImageConstants.imageLogo),
                             const SizedBox(
                                height: 24,
                             ),
