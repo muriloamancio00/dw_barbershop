@@ -23,6 +23,8 @@ class BarbershopApp extends StatelessWidget {
             '/': (_) => const SplashPage(),
             '/auth/login': (_) => const LoginPage(),  
             '/auth/register/user': (_) => const UserRegisterPage(),  
+            '/auth/rtegister/barbershop': (_) =>
+             const Center(child: Text('BarberShop Page')),  
             '/home/adm':(_) => const Text('ADM'),  
             '/home/employee':(_) => const Text('Employee'),  
           },
