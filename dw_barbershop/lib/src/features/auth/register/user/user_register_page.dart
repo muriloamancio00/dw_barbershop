@@ -105,6 +105,7 @@ class _UserRegisterPageState extends ConsumerState<UserRegisterPage> {
                       Validatorless.required('Confirmar senha obrigatório'),
                       Validatorless.compare(passwordEC, 'Senha diferente de confirma senha'),
                     ]),
+                    obscureText: true,
                     decoration: const InputDecoration(
                       label: Text('Confirmar Senha'),
                     ),
