@@ -14,10 +14,10 @@ class HoursPanel extends StatelessWidget {
 
    @override
    Widget build(BuildContext context) {
-       return const Column(
+       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Selecione os horarios de atendimento',
               style: TextStyle(
               fontFamily: FontConstants.fontFamily,
@@ -25,31 +25,15 @@ class HoursPanel extends StatelessWidget {
               fontSize: 14,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Wrap(
               spacing: 8,
               runSpacing: 16,
               children: [
-                TimeButton(label: '06:00'),
-                TimeButton(label: '07:00'),
-                TimeButton(label: '08:00'),
-                TimeButton(label: '09:00'),
-                TimeButton(label: '10:00'),
-                TimeButton(label: '11:00'),
-                TimeButton(label: '12:00'),
-                TimeButton(label: '13:00'),
-                TimeButton(label: '14:00'),
-                TimeButton(label: '15:00'),
-                TimeButton(label: '16:00'),
-                TimeButton(label: '17:00'),
-                TimeButton(label: '18:00'),
-                TimeButton(label: '19:00'),
-                TimeButton(label: '20:00'),
-                TimeButton(label: '21:00'),
-                TimeButton(label: '22:00'),
-                TimeButton(label: '23:00'),
+                for(int i = startTime; i<= endTime; i++)
+                  TimeButton(label: '${i.toString().padLeft(2,'0')}:00'),
               ],
             ),
           ],

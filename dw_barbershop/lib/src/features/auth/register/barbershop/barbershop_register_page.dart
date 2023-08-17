@@ -40,8 +40,8 @@ class BarbershopRegisterPage extends StatelessWidget {
                     height: 24,
                   ),
                   const HoursPanel(
-                    startTime: 6,
-                    endTime: 23,
+                    startTime: 0,
+                    endTime: 24,
                   ),
                   const SizedBox(
                     height: 24,
