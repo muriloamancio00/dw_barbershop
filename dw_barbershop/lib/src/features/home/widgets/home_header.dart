@@ -1,14 +1,21 @@
+import 'package:dw_barbershop/src/barbershop_app.dart';
+import 'package:dw_barbershop/src/core/providers/aplication_providers.dart';
 import 'package:dw_barbershop/src/core/ui/barbershop_icons.dart';
 import 'package:dw_barbershop/src/core/ui/constants.dart';
+import 'package:dw_barbershop/src/core/ui/widgets/barbershop_loader.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeHeader extends StatelessWidget {
+class HomeHeader extends ConsumerWidget{
   final bool hideFilter;
 
   const HomeHeader({ super.key, this.hideFilter= false });
 
    @override
-   Widget build(BuildContext context) {
+   Widget build(BuildContext context, WidgetRef ref) {
+    final barbershop = ref.watch(getMyBarbershopProvider);
+
+
        return Container(
         padding: const EdgeInsets.all(24),
         margin: const EdgeInsets.only(bottom: 16),
@@ -30,6 +37,15 @@ class HomeHeader extends StatelessWidget {
         child:  Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            //passando o provider la em cima, podemos usar a instancia do provider aqui
+            //!= maybewhen é que so precisamos implementar o orElse,
+            //? se tudo der errado isso vai ocorrer, e no when somos obrigado 
+            //? a implementar todos os metodos da função 
+            barbershop.maybeWhen(
+              orElse:(){
+                return const Center(child: BarbershopLoader());
+              } 
+            ),
             Row(
               children: [
                 const CircleAvatar(

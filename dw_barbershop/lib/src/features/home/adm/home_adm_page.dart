@@ -1,15 +1,20 @@
+import 'package:dw_barbershop/src/core/providers/aplication_providers.dart';
 import 'package:dw_barbershop/src/core/ui/barbershop_icons.dart';
 import 'package:dw_barbershop/src/core/ui/constants.dart';
 import 'package:dw_barbershop/src/features/home/adm/widgets/home_employee.dart';
 import 'package:dw_barbershop/src/features/home/widgets/home_header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeAdmPage extends StatelessWidget {
+class HomeAdmPage extends ConsumerWidget {
 
   const HomeAdmPage({ super.key });
 
    @override
-   Widget build(BuildContext context) {
+   Widget build(BuildContext context, WidgetRef ref) {
+
+
+
        return Scaffold(
         floatingActionButton: FloatingActionButton(
           shape: const CircleBorder(),
