@@ -72,7 +72,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
             case SplashState.loggedEmployee:
               _redirect('/home/employee');
             case _:
-              _redirect('/home/login');
+              _redirect('/auth/login');
           }
         },
       );
