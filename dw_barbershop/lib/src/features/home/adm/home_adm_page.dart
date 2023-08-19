@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:dw_barbershop/src/core/providers/aplication_providers.dart';
 import 'package:dw_barbershop/src/core/ui/barbershop_icons.dart';
 import 'package:dw_barbershop/src/core/ui/constants.dart';
+import 'package:dw_barbershop/src/core/ui/widgets/barbershop_loader.dart';
+import 'package:dw_barbershop/src/features/home/adm/home_adm_state.dart';
+import 'package:dw_barbershop/src/features/home/adm/home_adm_vm.dart';
 import 'package:dw_barbershop/src/features/home/adm/widgets/home_employee.dart';
 import 'package:dw_barbershop/src/features/home/widgets/home_header.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +18,7 @@ class HomeAdmPage extends ConsumerWidget {
    @override
    Widget build(BuildContext context, WidgetRef ref) {
 
-
+    final homeState = ref.watch(homeAdmVmProvider);
 
        return Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -26,7 +31,9 @@ class HomeAdmPage extends ConsumerWidget {
             child: Icon(BarbershopIcons.addEmployee,color: ColorsConstants.brow,),
           ),
         ),
-           body: CustomScrollView(
+           body: homeState.when(
+          data: (HomeAdmState data) {
+            return CustomScrollView(
             slivers: [
               const SliverToBoxAdapter(
                 child: HomeHeader(),
@@ -34,11 +41,20 @@ class HomeAdmPage extends ConsumerWidget {
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) => const HomeEmployee(),
-                  childCount: 20,
+                  childCount: data.employees.length,
                 ),
               ),
             ],
-           ),
+           );
+          }, 
+           error: (error , stackTrace) {
+            log('Erro ao carregar colaboradores');
+            return const Center(child: Text('Erro ao carregar pagina'),);
+           },
+           loading: () {
+            return const BarbershopLoader();
+           },
+          ),
        );
   }
 }

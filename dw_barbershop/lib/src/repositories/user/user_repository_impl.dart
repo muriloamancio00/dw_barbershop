@@ -74,4 +74,24 @@ class UserRepositoryImpl implements UserRepository {
       );
     }
   }
+  
+  @override
+ Future<Either<RepositoryException, List<UserModel>>> getEmployees(
+    int barbershopId) async {
+      try {
+  final Response(:List data) = await restClient.auth
+    .get('/users', queryParameters: {'barbershop_id': barbershopId});
+  
+    final employees = data.map((e) => UserModelEmployee.fromMap(e)).toList();
+    return Success(employees);
+  } on DioException catch (e, s) {
+    //erro de requisição
+    log('Erro ao buscar colaboradores', error: e, stackTrace: s);
+    return Failure(RepositoryException(message: 'Erro ao buscar colaboradores'));
+  }on ArgumentError catch (e, s) {
+    //erro de conversão
+    log('Erro ao converter colaboradores (Invalid Json)', error: e, stackTrace: s);
+    return Failure(RepositoryException(message: 'Erro ao buscar colaboradores'));
+      }
+  }
 }

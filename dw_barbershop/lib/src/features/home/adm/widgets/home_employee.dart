@@ -43,7 +43,7 @@ class HomeEmployee extends StatelessWidget {
              children: [
               const Text(
                 'Nome e sobrenome',
-                style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,

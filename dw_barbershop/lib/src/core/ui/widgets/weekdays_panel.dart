@@ -17,7 +17,7 @@ class WeekdaysPanel extends StatelessWidget {
               style: TextStyle(
                 fontFamily: FontConstants.fontFamily,
                 fontWeight: FontWeight.w500,
-                fontSize: 14,
+                fontSize: 12,
               ),
             ),
             const SizedBox(
