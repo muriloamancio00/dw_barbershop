@@ -22,7 +22,7 @@ class HomeAdmVm extends _$HomeAdmVm{
       case Success(value:final employees):
         return HomeAdmState(status: HomeAdmStateStatus.loaded, employees: employees);
       case Failure():
-        return HomeAdmState(status: HomeAdmStateStatus.loaded, employees: []);
+        return HomeAdmState(status: HomeAdmStateStatus.error, employees: []);
     } 
     
   }
