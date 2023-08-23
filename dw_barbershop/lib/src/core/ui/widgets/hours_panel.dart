@@ -6,12 +6,14 @@ class HoursPanel extends StatelessWidget {
   final int startTime;
   final int endTime;
   final ValueChanged<int> onPressed;
+  final List<int>? enableTimes;
 
   const HoursPanel({
    super.key,
     required this.startTime,
     required this.endTime,
     required this.onPressed,
+    this.enableTimes,
   });
 
    @override
@@ -36,6 +38,7 @@ class HoursPanel extends StatelessWidget {
               children: [
                 for(int i = startTime; i<= endTime; i++)
                   TimeButton(
+                    enableTimes: enableTimes,
                     label: '${i.toString().padLeft(2,'0')}:00',
                     value: i,
                     onPressed: onPressed,
@@ -52,6 +55,7 @@ class TimeButton extends StatefulWidget {
   final String label;
   final int value;
   final ValueChanged<int> onPressed;
+  final List<int>? enableTimes;
 
 
   const TimeButton({
@@ -59,6 +63,7 @@ class TimeButton extends StatefulWidget {
     required this.label,
     required this.value,
     required this.onPressed,
+    this.enableTimes,
   });
 
   @override
@@ -75,13 +80,21 @@ class _TimeButtonState extends State<TimeButton> {
     var buttonColor = selected ? ColorsConstants.brow : Colors.white;
     final buttonBorderColor = selected ? ColorsConstants.brow : ColorsConstants.grey;
 
+    final TimeButton(:value, :label, :enableTimes, :onPressed) = widget;
+
+    final disableTime = enableTimes != null && !enableTimes.contains(value); 
+
+    if(disableTime) {
+      buttonColor = Colors.grey[400]!;
+    }
+
 
     return InkWell(
       borderRadius: BorderRadius.circular(8),
-      onTap: () {
+      onTap: disableTime ? null : () {
         setState(() {
           selected = !selected;
-          widget.onPressed(widget.value);
+          onPressed(value);
         });
       },
       child: Container(
@@ -96,7 +109,7 @@ class _TimeButtonState extends State<TimeButton> {
         ),
         child: Center(
           child: Text(
-            widget.label,
+            label,
             style: TextStyle(
               fontFamily: FontConstants.fontFamily,
               fontWeight: FontWeight.w500,

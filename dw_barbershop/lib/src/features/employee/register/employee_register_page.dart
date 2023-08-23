@@ -83,6 +83,7 @@ class _EmployeeRegisterPageState extends State<EmployeeRegisterPage> {
                 HoursPanel(
                   startTime: 6,
                   endTime: 23,
+                  enableTimes: [6,7,8,9,16],
                   onPressed: (int hour) {},
                 ),
                 const SizedBox(
