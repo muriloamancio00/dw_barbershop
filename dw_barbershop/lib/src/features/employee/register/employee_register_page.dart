@@ -76,7 +76,7 @@ class _EmployeeRegisterPageState extends State<EmployeeRegisterPage> {
                 const SizedBox(
                   height: 24,
                 ),
-                WeekdaysPanel(onDayPressed: (String day) {}),
+                WeekdaysPanel(enableDays: ['Seg', 'Qua', 'Sab'], onDayPressed: (String day) {}),
                 const SizedBox(
                   height: 24,
                 ),
