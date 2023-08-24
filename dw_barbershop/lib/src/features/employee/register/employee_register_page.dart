@@ -42,6 +42,19 @@ class _EmployeeRegisterPageState extends ConsumerState<EmployeeRegisterPage> {
     final employeeRegisterVm = ref.watch(employeeRegisterVmProvider.notifier);
     final barbershopAsyncValue = ref.watch(getMyBarbershopProvider);
 
+    ref.listen(employeeRegisterVmProvider.select((state) => state.status),
+        (_, status) {
+      switch (status) {
+        case EmployeeRegisterStateStatus.initial:
+          break;
+        case EmployeeRegisterStateStatus.success:
+          Messages.showSuccess('Colaborador cadastrado com sucesso', context);
+          Navigator.of(context).pop();
+        case EmployeeRegisterStateStatus.error:
+          Messages.showError('Erro ao registrar colaborador', context);
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cadastrar Colaborador'),
@@ -99,8 +112,9 @@ class _EmployeeRegisterPageState extends ConsumerState<EmployeeRegisterPage> {
                           children: [
                             TextFormField(
                               controller: nameEC,
-                              validator:
-                                  Validatorless.required('Nome obrigatório'),
+                              validator: registerAdm
+                                  ? null
+                                  : Validatorless.required('Nome obrigatório'),
                               decoration:
                                   const InputDecoration(label: Text('Nome')),
                             ),
@@ -109,10 +123,13 @@ class _EmployeeRegisterPageState extends ConsumerState<EmployeeRegisterPage> {
                             ),
                             TextFormField(
                               controller: emailEC,
-                              validator: Validatorless.multiple([
-                                Validatorless.required('E-mail obrigatório'),
-                                Validatorless.email('E-mail invalido'),
-                              ]),
+                              validator: registerAdm
+                                  ? null
+                                  : Validatorless.multiple([
+                                      Validatorless.required(
+                                          'E-mail obrigatório'),
+                                      Validatorless.email('E-mail invalido'),
+                                    ]),
                               decoration:
                                   const InputDecoration(label: Text('E-mail')),
                             ),
@@ -121,11 +138,14 @@ class _EmployeeRegisterPageState extends ConsumerState<EmployeeRegisterPage> {
                             ),
                             TextFormField(
                               controller: passwordEC,
-                              validator: Validatorless.multiple([
-                                Validatorless.required('Senha obrigatoria'),
-                                Validatorless.min(6,
-                                    'Senha deve conter pelo menos 6 caracter'),
-                              ]),
+                              validator: registerAdm
+                                  ? null
+                                  : Validatorless.multiple([
+                                      Validatorless.required(
+                                          'Senha obrigatoria'),
+                                      Validatorless.min(6,
+                                          'Senha deve conter pelo menos 6 caracter'),
+                                    ]),
                               decoration:
                                   const InputDecoration(label: Text('Senha')),
                             ),
@@ -161,10 +181,11 @@ class _EmployeeRegisterPageState extends ConsumerState<EmployeeRegisterPage> {
                                   'Existem campos inválidos', context);
                             case true:
                               final EmployeeRegisterState(
-                                :workdays,
-                                :workhours
+                                //extraindo diretamente pelos destructions
+                                workdays: List(isNotEmpty: hasWorkDays),
+                                workhours: List(isNotEmpty: hasWorkHours),
                               ) = ref.watch(employeeRegisterVmProvider);
-                              if (workdays.isEmpty || workhours.isNotEmpty) {
+                              if (!hasWorkDays || !hasWorkHours) {
                                 Messages.showError(
                                     'Por favor selecione os dias da semana e horário de atendimento',
                                     context);
@@ -173,7 +194,8 @@ class _EmployeeRegisterPageState extends ConsumerState<EmployeeRegisterPage> {
                               final name = nameEC.text;
                               final email = emailEC.text;
                               final password = passwordEC.text;
-                              employeeRegisterVm.register(name:name, email:email, password:password);
+                              employeeRegisterVm.register(
+                                  name: name, email: email, password: password);
                           }
                         },
                         child: const Text('CADASTRAR COLABORADOR'),
