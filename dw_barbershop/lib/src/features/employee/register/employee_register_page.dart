@@ -1,10 +1,12 @@
 import 'dart:developer';
 
 import 'package:dw_barbershop/src/core/providers/aplication_providers.dart';
+import 'package:dw_barbershop/src/core/ui/helpers/messages.dart';
 import 'package:dw_barbershop/src/core/ui/widgets/avatar_widget.dart';
 import 'package:dw_barbershop/src/core/ui/widgets/barbershop_loader.dart';
 import 'package:dw_barbershop/src/core/ui/widgets/hours_panel.dart';
 import 'package:dw_barbershop/src/core/ui/widgets/weekdays_panel.dart';
+import 'package:dw_barbershop/src/features/employee/register/employee_register_state.dart';
 import 'package:dw_barbershop/src/features/employee/register/employee_register_vm.dart';
 import 'package:dw_barbershop/src/model/barbershop_model.dart';
 import 'package:flutter/material.dart';
@@ -152,7 +154,28 @@ class _EmployeeRegisterPageState extends ConsumerState<EmployeeRegisterPage> {
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size.fromHeight(56),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          switch (formKey.currentState?.validate()) {
+                            case false || null:
+                              Messages.showError(
+                                  'Existem campos inválidos', context);
+                            case true:
+                              final EmployeeRegisterState(
+                                :workdays,
+                                :workhours
+                              ) = ref.watch(employeeRegisterVmProvider);
+                              if (workdays.isEmpty || workhours.isNotEmpty) {
+                                Messages.showError(
+                                    'Por favor selecione os dias da semana e horário de atendimento',
+                                    context);
+                                return;
+                              }
+                              final name = nameEC.text;
+                              final email = emailEC.text;
+                              final password = passwordEC.text;
+                              employeeRegisterVm.register(name:name, email:email, password:password);
+                          }
+                        },
                         child: const Text('CADASTRAR COLABORADOR'),
                       ),
                     ],
