@@ -45,7 +45,7 @@ class WeekdaysPanel extends StatelessWidget {
                   enableDays: enableDays,
                 ),
                 ButtonDay(
-                  label: 'Qua',
+                  label: 'Qui',
                   onDaySelected: onDayPressed,
                   enableDays: enableDays,
                 ),
