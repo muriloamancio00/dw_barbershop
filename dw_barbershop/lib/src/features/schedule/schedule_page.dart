@@ -115,11 +115,11 @@ class _SchedulePageState extends State<SchedulePage> {
                   const SizedBox(
                     height: 24,
                   ),
-                  HoursPanel(
+                  HoursPanel.singleSelection(
                     startTime: 6,
                     endTime: 26,
                     onHourPressed: (hour) {},
-                    enableTimes: const [6, 7, 8],
+                    enableTimes: const [6, 17, 8],
                   ),
                   const SizedBox(
                     height: 24,
