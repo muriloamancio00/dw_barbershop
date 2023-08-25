@@ -93,8 +93,8 @@ class _BarbershopRegisterPageState extends ConsumerState<BarbershopRegisterPage>
                       height: 24,
                     ),
                     HoursPanel(
-                      startTime: 0,
-                      endTime: 24,
+                      startTime: 6,
+                      endTime: 23,
                       onHourPressed: (int value){
                         barbershopRegisterVm.addOrRemoveOpenHour(value);
                       },

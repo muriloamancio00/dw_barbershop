@@ -25,6 +25,7 @@ class HomeAdmPage extends ConsumerWidget {
         onPressed: () async {
           await Navigator.of(context).pushNamed('/employee/register');
           //invalidamos para ele fazer a busca novamente na tela
+          ref.invalidate(getMeProvider);
           ref. invalidate(homeAdmVmProvider);
         },
         child: const CircleAvatar(
