@@ -2,7 +2,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:dw_barbershop/src/barbershop_app.dart';
 import 'package:dw_barbershop/src/core/constants/local_storage_keys.dart';
 import 'package:dw_barbershop/src/core/ui/barbershop_nav_global_key.dart';
 import 'package:flutter/material.dart';
