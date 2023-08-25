@@ -67,6 +67,7 @@ class HomeEmployeePage extends ConsumerWidget {
                                   ref.watch(getTotalSchedulesTodayProvider(id));
                               return totalAsync.when(
                                   loading: () => const BarbershopLoader(),
+                                  skipLoadingOnRefresh: false,
                                   error: (error, stackTrace) {
                                     log('Erro ao carregar agendamento',
                                         error: error, stackTrace: stackTrace);
@@ -101,9 +102,10 @@ class HomeEmployeePage extends ConsumerWidget {
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size.fromHeight(56),
                         ),
-                        onPressed: () {
-                          Navigator.of(context)
+                        onPressed: () async {
+                          await Navigator.of(context)
                               .pushNamed('/schedule', arguments: user);
+                          ref.invalidate(getTotalSchedulesTodayProvider);
                         },
                         child: const Text('AGENDAR CLIENTE'),
                       ),
